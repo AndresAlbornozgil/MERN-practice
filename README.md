@@ -1,2 +1,2 @@
 # MERN-practice
-A simple project to practice setting up a project using the MVC structure.
+A simple project to practice setting up a project using the MERN Stack.
