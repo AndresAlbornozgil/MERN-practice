@@ -42,4 +42,4 @@ startApolloServer();
 
 // Not deployed yet -- How to deploy using Render & MongoDB Atlas in hour 1:01 minute of video tutorial
 
-// Continue watching video in hour 1:33 minute
+// Continue watching video in hour 1:40 minute
