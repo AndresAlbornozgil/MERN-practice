@@ -6,9 +6,10 @@ const resolvers = {
             return Food.find({});
         }
     },
+    
     Mutation: {
-        addFood: async (parent, {name, description, price}) => {
-            return await Food.create({name, description, price});
+        addFood: async (parent, {name, description}) => {
+            return await Food.create({name, description});
         }
     }
 };

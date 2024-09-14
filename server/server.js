@@ -1,7 +1,9 @@
 const express = require('express');
+const path = require('path');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 
+const db = require('./config/connection');
 // We need to CREATE and CONNECT our typeDefs and Resolvers
 const { typeDefs, resolvers } = require('./schemas/');
 
@@ -10,10 +12,6 @@ const server = new ApolloServer({
     typeDefs,
     resolvers
 })
-
-const db = require('./config/connection');
-
-const { Food } = require('./models/Food');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,6 +23,14 @@ const startApolloServer = async () => {
 
     app.use('/graphql', expressMiddleware(server));
 
+    if(process.env.NODE_ENV === 'production') {
+        app.use(express.static(path.join(__dirname, '../client/dist')));
+
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+        });
+    };
+
     db.once('open', () => {
         app.listen(PORT, () => {
             console.log(`Connected to localhost://${PORT}`);
@@ -33,5 +39,7 @@ const startApolloServer = async () => {
 };
 
 startApolloServer();
+
+// Not deployed yet -- How to deploy using Render & MongoDB Atlas in hour 1:01 minute of video tutorial
 
 // Continue watching video in minute 56:30
